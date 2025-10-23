@@ -1,0 +1,46 @@
+
+# ---- Java / Maven ----
+target/
+!.mvn/wrapper/maven-wrapper.jar
+.mvn/
+dependency-reduced-pom.xml
+
+# Logs & temps
+logs/
+*.log
+*.tmp
+
+# ---- IntelliJ IDEA ----
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# ---- OS ----
+.DS_Store
+Thumbs.db
+
+# ---- Build artifacts ----
+*.class
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# ---- Test / Coverage ----
+test-output/
+*.coverage
+*.exec
+*.lcov
+
+# ---- Env / Local config ----
+.env
+.env.*
+application-local.properties
+application-test.properties
+
+# ---- API Requests ----
+api-requests/
