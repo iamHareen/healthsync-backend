@@ -44,3 +44,4 @@ application-test.properties
 
 # ---- API Requests ----
 api-requests/
+grpc-request/

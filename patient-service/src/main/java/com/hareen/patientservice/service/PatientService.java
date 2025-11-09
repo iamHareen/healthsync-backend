@@ -7,8 +7,10 @@ import com.hareen.patientservice.exception.PatientNotFoundException;
 import com.hareen.patientservice.mapper.PatientMapper;
 import com.hareen.patientservice.model.Patient;
 import com.hareen.patientservice.repository.PatientRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -45,10 +47,23 @@ public class PatientService {
     public PatientResponseDTO updatePatient(UUID id, PatientRequestDTO patientRequestDTO) {
         Patient patient = patientRepository.findById(id).orElseThrow(()->
                 new PatientNotFoundException("Patient not found with ID: " + id));
+
+        if(patientRepository.existsByEmailAndIdNot(patientRequestDTO.getEmail(), id)) {
+            throw new EmailAlreadyExistsException("A Patient with this Email already exists: " + patientRequestDTO.getEmail());
+        }
         patient.setName(patientRequestDTO.getName());
         patient.setEmail(patientRequestDTO.getEmail());
         patient.setAddress(patientRequestDTO.getAddress());
-//        patient.setDateOfBirth(patientRequestDTO.getDateOfBirth());
-        return null;
+        patient.setDateOfBirth(LocalDate.parse(patientRequestDTO.getDateOfBirth()));
+
+        Patient updatedPatient = patientRepository.save(patient);
+        return PatientMapper.toDTO(updatedPatient);
+    }
+
+    public void deletePatient(UUID id) {
+        if(!patientRepository.existsById(id)) {
+            throw new PatientNotFoundException("Patient not found with ID: " + id);
+        }
+        patientRepository.deleteById(id);
     }
 }

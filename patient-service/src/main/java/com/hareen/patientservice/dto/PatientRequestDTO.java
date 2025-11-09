@@ -1,5 +1,6 @@
 package com.hareen.patientservice.dto;
 
+import com.hareen.patientservice.dto.validators.CreatePatientValidationGroup;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -20,7 +21,7 @@ public class PatientRequestDTO {
     @NotBlank(message = "Date of Birth is required")
     private String dateOfBirth;
 
-    @NotNull(message = "Register Date is required")
+    @NotBlank(groups = CreatePatientValidationGroup.class, message = "Register Date is required")
     private String registerDate;
 
     public String getAddress() {
